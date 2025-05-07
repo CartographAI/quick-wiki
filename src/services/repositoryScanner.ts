@@ -1,12 +1,12 @@
 import { execSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
-import { FileTreeNode, FileContent } from '../models/types';
+import { FileContent } from '../models/types';
 
 export class RepositoryScanner {
   constructor(private repositoryPath: string) {}
 
-  async getFileTree(): Promise<FileTreeNode[]> {
+  async getFileTree(): Promise<string> {
     try {
       // Check if tree command is available
       try {
@@ -16,18 +16,11 @@ export class RepositoryScanner {
       }
 
       // Execute tree command with gitignore support
-      const treeOutput = execSync(`tree --gitignore -J "${this.repositoryPath}"`, {
+      const treeOutput = execSync(`tree --gitignore "${this.repositoryPath}"`, {
         maxBuffer: 10 * 1024 * 1024, // 10MB buffer to handle large repos
       }).toString();
 
-      const treeData = JSON.parse(treeOutput);
-      if (!Array.isArray(treeData) || treeData.length === 0) {
-        throw new Error('Unable to parse repository structure');
-      }
-
-      // The tree command returns a nested structure, we need to extract the actual file tree
-      const rootDir = treeData[0];
-      return rootDir.contents || [];
+      return treeOutput;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to scan repository: ${error.message}`);

@@ -29,7 +29,9 @@ export class Orchestrator {
       // 1. Get file tree
       console.log('Scanning repository structure...');
       const fileTree = await scanner.getFileTree();
-      console.log(`Found ${this.countFiles(fileTree)} files in repository`);
+      // Extract the summary line from the tree output (e.g. "6 directories, 16 files")
+      const summaryLine = fileTree.split('\n').filter(line => line.includes('directories') && line.includes('files')).pop();
+      console.log(`Repository scan complete: ${summaryLine || 'Structure obtained'}`);
 
       // 2. Get initial file selection
       console.log('Selecting initial relevant files...');
@@ -74,26 +76,5 @@ export class Orchestrator {
       console.error('An unknown error occurred');
       throw new Error('An unknown error occurred');
     }
-  }
-
-  private countFiles(fileTree: any[]): number {
-    let count = 0;
-    
-    const countNodesRecursively = (nodes: any[]) => {
-      if (!nodes) return;
-      
-      for (const node of nodes) {
-        if (!node.isDirectory) {
-          count++;
-        }
-        
-        if (node.children && node.children.length > 0) {
-          countNodesRecursively(node.children);
-        }
-      }
-    };
-    
-    countNodesRecursively(fileTree);
-    return count;
   }
 }

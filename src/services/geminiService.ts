@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { FileTreeNode, LLMRequestOptions, DocStructure, FileContent, DocPage } from '../models/types';
+import { LLMRequestOptions, DocStructure, FileContent, DocPage } from '../models/types';
 
 export class GeminiService {
   private ai: GoogleGenAI;
@@ -72,18 +72,16 @@ export class GeminiService {
   }
 
   async selectRelevantFiles(
-    fileTree: FileTreeNode[],
+    fileTree: string,
     count: number = 50,
     initialFileContents?: FileContent[]
   ): Promise<string[]> {
     try {
-      const fileTreeStr = JSON.stringify(fileTree, null, 2);
-      
       let prompt = `
 You are analyzing a codebase to generate documentation. Given the following file tree structure, select the ${count} most important files that would help you understand the overall architecture, main components, and key functionality of this project. Choose files that provide the most insight into how the system works.
 
 File Tree:
-${fileTreeStr}
+${fileTree}
 
 Select files that:
 1. Describe the project architecture
@@ -114,7 +112,7 @@ The content of these files indicates:
 ${initialContentSummary}
 
 File Tree:
-${fileTreeStr}
+${fileTree}
 `;
       }
 

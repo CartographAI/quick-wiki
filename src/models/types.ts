@@ -1,9 +1,3 @@
-export interface FileTreeNode {
-  path: string;
-  isDirectory: boolean;
-  children?: FileTreeNode[];
-}
-
 export interface LLMRequestOptions {
   temperature?: number;
   maxTokens?: number;
