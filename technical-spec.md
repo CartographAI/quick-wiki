@@ -65,6 +65,44 @@ Cartograph is a TypeScript-based documentation generator that automatically crea
    - Generate detailed page content
    - Write to markdown file in output directory
 
+### 3.3 File Tree Structure
+
+The project follows a structured organization of files and directories:
+
+```
+.
+├── README.md                     # Project overview and usage instructions
+├── generate-docs.sh              # Script to generate documentation
+├── jest.config.js                # Jest testing configuration
+├── package-lock.json             # NPM dependencies lock file
+├── package.json                  # Project metadata and dependencies
+├── progress.md                   # Development progress tracking
+├── src                           # Source code directory
+│   ├── index.ts                  # Main entry point
+│   ├── models                    # Data models and interfaces
+│   │   └── types.ts              # Type definitions for the application
+│   ├── services                  # Core services
+│   │   ├── documentationGenerator.ts  # Generates markdown documentation
+│   │   ├── geminiService.ts      # Handles Gemini API communication
+│   │   ├── orchestrator.ts       # Coordinates the documentation process
+│   │   └── repositoryScanner.ts  # Scans repository and reads files
+│   ├── tests                     # Test files
+│   │   └── repositoryScanner.test.ts  # Tests for repository scanner
+│   └── utils                     # Utility functions
+│       └── errorHandling.ts      # Error handling utilities
+├── technical-spec.md             # Technical specification
+├── tsconfig.json                 # TypeScript configuration
+└── verify-installation.sh        # Installation verification script
+```
+
+This structure organizes the code logically with:
+- Configuration files at the root level
+- Source code in the `src` directory, further divided into modules
+- Core logic in the `services` directory
+- Data model definitions in the `models` directory
+- Utility functions in the `utils` directory
+- Tests in a dedicated `tests` directory
+
 ## 4. Detailed Implementation Specification
 
 ### 4.1 Command-Line Interface
