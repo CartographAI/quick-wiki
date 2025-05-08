@@ -1,9 +1,9 @@
-import { GoogleGenAI, Type } from '@google/genai';
-import { LLMRequestOptions, DocStructure, FileContent, DocPage } from '../models/types';
+import { GoogleGenAI, Type } from "@google/genai";
+import { LLMRequestOptions, DocStructure, FileContent, DocPage } from "../models/types";
 
 export class GeminiService {
   private ai: GoogleGenAI;
-  
+
   constructor(private apiKey: string) {
     this.ai = new GoogleGenAI({ apiKey: this.apiKey });
   }
@@ -21,17 +21,13 @@ export class GeminiService {
     }
   }
 
-  async generateResponse(
-    prompt: string,
-    context?: string,
-    options?: LLMRequestOptions
-  ): Promise<string> {
+  async generateResponse(prompt: string, context?: string, options?: LLMRequestOptions): Promise<string> {
     try {
       const fullPrompt = context ? `${context}\n\n${prompt}` : prompt;
-      
+
       const response = await this.ai.models.generateContent({
-        model: 'gemini-2.0-flash',
-        contents: fullPrompt
+        model: "gemini-2.0-flash",
+        contents: fullPrompt,
       });
 
       return response.text || "";
@@ -39,26 +35,26 @@ export class GeminiService {
       if (error instanceof Error) {
         throw new Error(`Failed to generate response: ${error.message}`);
       }
-      throw new Error('Failed to generate response: Unknown error');
+      throw new Error("Failed to generate response: Unknown error");
     }
   }
-  
+
   async generateStructuredResponse<T>(
-    prompt: string, 
+    prompt: string,
     responseSchema: any,
     context?: string,
-    options?: LLMRequestOptions
+    options?: LLMRequestOptions,
   ): Promise<T> {
     try {
       const fullPrompt = context ? `${context}\n\n${prompt}` : prompt;
-      
+
       const response = await this.ai.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: "gemini-2.0-flash",
         contents: fullPrompt,
         config: {
-          responseMimeType: 'application/json',
-          responseSchema: responseSchema
-        }
+          responseMimeType: "application/json",
+          responseSchema: responseSchema,
+        },
       });
 
       const text = response.text || "{}";
@@ -67,14 +63,14 @@ export class GeminiService {
       if (error instanceof Error) {
         throw new Error(`Failed to generate structured response: ${error.message}`);
       }
-      throw new Error('Failed to generate structured response: Unknown error');
+      throw new Error("Failed to generate structured response: Unknown error");
     }
   }
 
   async selectRelevantFiles(
     fileTree: string,
     count: number = 50,
-    initialFileContents?: FileContent[]
+    initialFileContents?: FileContent[],
   ): Promise<string[]> {
     try {
       let prompt = `
@@ -93,9 +89,9 @@ Select files that:
 
       if (initialFileContents) {
         const initialContentSummary = initialFileContents
-          .map(file => `${file.path}: ${file.content.substring(0, 200)}...`)
-          .join('\n\n');
-        
+          .map((file) => `${file.path}: ${file.content.substring(0, 200)}...`)
+          .join("\n\n");
+
         prompt = `
 Based on my review of the initial files, I now have some understanding of the project. To complete my understanding, please suggest up to ${count} additional files that would fill in important gaps in my knowledge of the system. Focus on files that:
 
@@ -106,7 +102,7 @@ Based on my review of the initial files, I now have some understanding of the pr
 5. Provide context on deployment or infrastructure
 
 I've already reviewed these files:
-${initialFileContents.map(file => file.path).join('\n')}
+${initialFileContents.map((file) => file.path).join("\n")}
 
 The content of these files indicates:
 ${initialContentSummary}
@@ -121,7 +117,7 @@ ${fileTree}
         type: Type.ARRAY,
         items: {
           type: Type.STRING,
-          description: 'A file path from the repository',
+          description: "A file path from the repository",
         },
       };
 
@@ -130,15 +126,15 @@ ${fileTree}
       if (error instanceof Error) {
         throw new Error(`Failed to select relevant files: ${error.message}`);
       }
-      throw new Error('Failed to select relevant files: Unknown error');
+      throw new Error("Failed to select relevant files: Unknown error");
     }
   }
 
   async generateDocStructure(fileContents: FileContent[]): Promise<DocStructure> {
     try {
       const fileContentsSummary = fileContents
-        .map(file => `File: ${file.path}\nContent: ${file.content.substring(0, 300)}...`)
-        .join('\n\n');
+        .map((file) => `File: ${file.path}\nContent: ${file.content.substring(0, 300)}...`)
+        .join("\n\n");
 
       const prompt = `
 Based on your analysis of this codebase, create a documentation structure that will comprehensively explain this system to new developers.
@@ -214,47 +210,94 @@ IMPORTANT: For each page, include ALL files that might be relevant to that topic
       if (error instanceof Error) {
         throw new Error(`Failed to generate doc structure: ${error.message}`);
       }
-      throw new Error('Failed to generate doc structure: Unknown error');
+      throw new Error("Failed to generate doc structure: Unknown error");
     }
   }
 
-  async generatePageContent(
-    pageInfo: DocPage,
-    relevantFiles: FileContent[]
-  ): Promise<string> {
+  async generatePageContent(pageInfo: DocPage, relevantFiles: FileContent[]): Promise<string> {
     try {
       const fileContentsStr = relevantFiles
-        .map(file => `File: ${file.path}\n\n\`\`\`\n${file.content}\n\`\`\``)
-        .join('\n\n');
+        .map((file) => `File: ${file.path}\n\n\`\`\`\n${file.content}\n\`\`\``)
+        .join("\n\n");
 
       const prompt = `
-You are generating comprehensive documentation for a specific aspect of a codebase. Based on the provided files, create detailed markdown documentation for the page titled "${pageInfo.title}" with description "${pageInfo.description}".
+You are generating concise, focused documentation for a specific aspect of a codebase. Based on the provided files, create markdown documentation for the page titled "${pageInfo.title}" with description "${pageInfo.description}".
 
-This documentation should:
-1. Start with a clear H1 title and introduction
-2. Use H2 and H3 subheadings to organize content logically
-3. Include code examples with proper syntax highlighting
-4. Create Mermaid diagrams when useful for visualizing:
-   - Architecture
-   - Workflows
-   - Data models
-   - Component relationships
-5. Include tables when appropriate to organize information
-6. Explain not just what the code does, but why it's designed that way
+IMPORTANT FORMAT RULES - FOLLOW THESE PRECISELY:
+- Your raw markdown content will be directly saved as a documentation page
+- BEGIN with "# " (H1 heading) - NO preamble, NO backticks, NO explanations
+- DO NOT wrap your output in \`\`\`markdown or any code block markers
+- NO explanatory text before the H1 heading
+- After the H1 heading, include a brief, informative introductory paragraph
+- The intro paragraph should directly describe what the component does, NOT meta-text like "This document explains..."
+- Keep the entire document between 100-250 lines maximum
+- Keep the document focused and avoid unnecessary verbosity
+
+Structure Guidelines:
+1. Use H2 and H3 subheadings to organize content logically
+2. Include small, focused code examples (no more than 10-15 lines each)
+3. Create Mermaid diagrams when useful for visualizing architecture, workflows, data models, or component relationships
+4. Use tables when they make information more scannable
+
+Content Guidelines:
+1. DO NOT quote large chunks of code from the repository
+2. ALWAYS include links when referring to files, classes, or functions:
+   - Example for file links: [fileName](/path/to/file.ts)
+   - Example for function links: [functionName()](/path/to/file.ts#L42)
+   - Example: The [ShoppingCart](/src/services/shoppingCart.ts) class uses the [createProduct](/src/crud/products.js#L25) function
+   - Every mention of a class, function, or file MUST include a link
+3. Focus on high-level understanding, architecture, and relationships
+4. Explain design decisions and patterns, not just implementations
+5. For code examples, include only the most important snippets that illustrate key concepts
 
 Here are the relevant files for this page:
 
 ${fileContentsStr}
 
-Write comprehensive, clear, and insightful documentation that would be valuable to a developer new to this codebase. Be sure to include Mermaid diagrams where they would help visualize relationships or processes. Your response should be complete markdown that can be directly saved as a documentation page.
+CRITICAL: Your direct markdown content will be used "as is" without modification. Examples of correct and incorrect format:
+
+INCORRECT (has preamble before H1):
+I will create documentation for the Repository Scanner module...
+# Repository Scanner
+
+INCORRECT (wrapped in code block):
+\`\`\`markdown
+# Repository Scanner
+\`\`\`
+
+INCORRECT (meta-description):
+# Repository Scanner
+This document explains the role and functionality of the Repository Scanner...
+
+CORRECT (starts immediately with H1, has specific description of functionality):
+# Repository Scanner
+The [RepositoryScanner](/src/services/repositoryScanner.ts) class is responsible for scanning repository file structure and reading file contents. It provides methods to get a tree representation of files, read content of individual files, and efficiently read multiple files.
+
+CORRECT (for non-code pages, gives factual summary not meta-description):
+# Installation and Setup
+This document provides instructions on how to install, configure and use Cartograph, as well as steps for troubleshooting and local development setup.
 `;
 
-      return await this.generateResponse(prompt);
+      // Define schema for direct markdown output
+      const responseSchema = {
+        type: Type.OBJECT,
+        properties: {
+          rawMarkdownContent: {
+            type: Type.STRING,
+            description:
+              "The direct markdown content starting with '# ' (H1 heading) without any code block markers or preamble. This content will be used as-is without modification.",
+          },
+        },
+        required: ["rawMarkdownContent"],
+      };
+
+      const response = await this.generateStructuredResponse<{ rawMarkdownContent: string }>(prompt, responseSchema);
+      return response.rawMarkdownContent;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to generate page content: ${error.message}`);
       }
-      throw new Error('Failed to generate page content: Unknown error');
+      throw new Error("Failed to generate page content: Unknown error");
     }
   }
 }

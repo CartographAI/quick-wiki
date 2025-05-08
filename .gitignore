@@ -9,6 +9,7 @@ dist/
 
 # Generated documentation
 cartograph_docs/
+cartograph_docs_versions/
 
 # OS-specific files
 .DS_Store
