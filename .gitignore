@@ -25,3 +25,6 @@ npm-debug.log*
 *.swp
 *.swo
 **/.claude/settings.local.json
+
+# Test outputs
+coverage/

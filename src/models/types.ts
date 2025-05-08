@@ -8,7 +8,7 @@ export interface DocPage {
   title: string;
   description: string;
   relevantFilePaths: string[];
-  subPages?: string[]; // References to child page IDs
+  subPages: string[] | null; // References to child page IDs
 }
 
 export interface DocStructure {

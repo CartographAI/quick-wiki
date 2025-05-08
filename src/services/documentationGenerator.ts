@@ -1,14 +1,14 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { DocStructure, DocPage } from '../models/types';
-import { GeminiService } from './geminiService';
-import { RepositoryScanner } from './repositoryScanner';
+import fs from "fs/promises";
+import path from "path";
+import { DocStructure, DocPage } from "../models/types";
+import { GeminiService } from "./geminiService";
+import { RepositoryScanner } from "./repositoryScanner";
 
 export class DocumentationGenerator {
   constructor(
     private outputDir: string,
     private geminiService: GeminiService,
-    private repositoryScanner: RepositoryScanner
+    private repositoryScanner: RepositoryScanner,
   ) {}
 
   async generateAllDocs(docStructure: DocStructure): Promise<void> {
@@ -20,7 +20,7 @@ export class DocumentationGenerator {
       if (error instanceof Error) {
         throw new Error(`Failed to create output directory: ${error.message}`);
       }
-      throw new Error('Failed to create output directory: Unknown error');
+      throw new Error("Failed to create output directory: Unknown error");
     }
 
     // Generate documentation for each page
@@ -30,7 +30,7 @@ export class DocumentationGenerator {
     for (let i = 0; i < totalPages; i++) {
       const page = docStructure.pages[i];
       console.log(`[${i + 1}/${totalPages}] Generating: ${page.id} - ${page.title}`);
-      
+
       try {
         const markdown = await this.generatePageMarkdown(page);
         await this.writeDocPage(page.id, markdown);
@@ -51,9 +51,7 @@ export class DocumentationGenerator {
 
   private async generatePageMarkdown(page: DocPage): Promise<string> {
     // Get relevant file contents
-    const relevantFiles = await this.repositoryScanner.readMultipleFiles(
-      page.relevantFilePaths
-    );
+    const relevantFiles = await this.repositoryScanner.readMultipleFiles(page.relevantFilePaths);
 
     // Generate page content using LLM
     return await this.geminiService.generatePageContent(page, relevantFiles);
@@ -61,50 +59,34 @@ export class DocumentationGenerator {
 
   private async writeDocPage(pageId: string, content: string): Promise<void> {
     const filePath = path.join(this.outputDir, `${pageId}.md`);
-    await fs.writeFile(filePath, content, 'utf-8');
+    await fs.writeFile(filePath, content, "utf-8");
   }
 
-  private async generateIndexPage(docStructure: DocStructure): Promise<void> {
-    const indexContent = `# Documentation Index
-
-${this.generateTableOfContents(docStructure.pages)}
-`;
-
-    await fs.writeFile(
-      path.join(this.outputDir, 'index.md'),
-      indexContent,
-      'utf-8'
-    );
-  }
-
-  private generateTableOfContents(pages: DocPage[], parentId: string = ''): string {
-    const topLevelPages = !parentId 
-      ? pages.filter(p => !p.id.includes('-'))
-      : pages.filter(p => {
-          const idPrefix = p.id.split('_')[0];
-          return idPrefix.startsWith(parentId) && idPrefix.includes('-');
-        });
-
-    if (topLevelPages.length === 0) return '';
-
-    return topLevelPages
-      .map(page => {
-        const pageLink = `- [${page.title}](./${page.id}.md): ${page.description}\n`;
-        
-        // Get subpages if they exist
-        if (page.subPages && page.subPages.length > 0) {
-          const subpagesList = page.subPages
-            .map(subpageId => {
-              const subpage = pages.find(p => p.id === subpageId);
-              if (!subpage) return '';
-              return `  - [${subpage.title}](./${subpage.id}.md): ${subpage.description}`;
-            })
-            .join('\n');
-          return `${pageLink}${subpagesList}`;
+  // Returns the index page content as a string, for easy testing
+  public generateIndexPage(docStructure: DocStructure): string {
+    const pages = docStructure.pages;
+    let toc = "";
+    let topLevelIndex = 1;
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      // Top-level page: id does not have a dash after the leading number
+      if (!/\d-\d/.test(page.id)) {
+        toc += `${topLevelIndex}. [${page.title}](./${page.id}.md): ${page.description}\n`;
+        // Handle subpages if any
+        if (Array.isArray(page.subPages) && page.subPages.length > 0) {
+          let subIndex = 1;
+          for (const subPageId of page.subPages) {
+            const subPage = pages.find((p) => p.id === subPageId);
+            if (subPage) {
+              toc += `    ${topLevelIndex}.${subIndex} [${subPage.title}](./${subPage.id}.md): ${subPage.description}\n`;
+              subIndex++;
+            }
+          }
         }
-        
-        return pageLink;
-      })
-      .join('\n');
+        topLevelIndex++;
+      }
+    }
+    const indexContent = `# Documentation Index\n\n${toc.trimEnd()}\n`;
+    return indexContent;
   }
 }
