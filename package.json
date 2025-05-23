@@ -1,10 +1,10 @@
 {
-  "name": "cartograph",
+  "name": "quick-wiki",
   "version": "0.1.0",
   "description": "Automated documentation generator for codebases",
   "main": "dist/index.js",
   "bin": {
-    "cartograph": "dist/index.js"
+    "quick-wiki": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

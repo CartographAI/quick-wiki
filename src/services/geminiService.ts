@@ -275,7 +275,7 @@ The [RepositoryScanner](/src/services/repositoryScanner.ts) class is responsible
 
 CORRECT (for non-code pages, gives factual summary not meta-description):
 # Installation and Setup
-This document provides instructions on how to install, configure and use Cartograph, as well as steps for troubleshooting and local development setup.
+This document provides instructions on how to install, configure and use QuickWiki, as well as steps for troubleshooting and local development setup.
 `;
 
       // Define schema for direct markdown output

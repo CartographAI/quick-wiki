@@ -1,10 +1,10 @@
-# Technical Specification: Cartograph Documentation Generator
+# Technical Specification: QuickWiki Documentation Generator
 
 ## 1. Context & Goals
 
 ### 1.1 Project Overview
 
-Cartograph is a TypeScript-based documentation generator that automatically creates comprehensive documentation for codebases. It analyzes repositories by examining file structures and contents, then leverages Google's Gemini LLM to generate insightful, well-structured documentation that includes diagrams, code explanations, and architectural overviews.
+QuickWiki is a TypeScript-based documentation generator that automatically creates comprehensive documentation for codebases. It analyzes repositories by examining file structures and contents, then leverages Google's Gemini LLM to generate insightful, well-structured documentation that includes diagrams, code explanations, and architectural overviews.
 
 ### 1.2 Core Goals
 
@@ -37,7 +37,7 @@ Cartograph is a TypeScript-based documentation generator that automatically crea
 
 ### 2.4 Documentation Output
 
-- Generate flat markdown files in the `cartograph_docs` directory
+- Generate flat markdown files in the `wiki` directory
 - Use hierarchical naming convention (e.g., "1_project-overview", "1-1_architecture")
 - Include Mermaid diagrams for visualizations
 - Support standard markdown components (headings, code blocks, tables)
@@ -96,6 +96,7 @@ The project follows a structured organization of files and directories:
 ```
 
 This structure organizes the code logically with:
+
 - Configuration files at the root level
 - Source code in the `src` directory, further divided into modules
 - Core logic in the `services` directory
@@ -112,7 +113,7 @@ This structure organizes the code logically with:
 // Read GEMINI_API_KEY from environment
 interface CommandLineArgs {
   repositoryPath: string;
-  outputDir?: string; // Defaults to `${repositoryPath}/cartograph_docs`
+  outputDir?: string; // Defaults to `${repositoryPath}/wiki`
   geminiApiKey?: string; // Uses process.env.GEMINI_API_KEY if not provided
 }
 ```

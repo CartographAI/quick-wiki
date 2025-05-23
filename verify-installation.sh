@@ -48,5 +48,5 @@ echo "Building project..."
 npm run build
 
 echo "Verification complete! The environment appears to be set up correctly."
-echo "You can now use Cartograph to generate documentation:"
+echo "You can now use QuickWiki to generate documentation:"
 echo "npm start -- /path/to/your/repository"

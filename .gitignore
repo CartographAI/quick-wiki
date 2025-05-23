@@ -7,9 +7,8 @@ dist/
 # Environment variables
 .env
 
-# Generated documentation
-cartograph_docs/
-cartograph_docs_versions/
+# Local files
+local/
 
 # OS-specific files
 .DS_Store

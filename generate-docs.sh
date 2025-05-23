@@ -6,12 +6,12 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}Cartograph Documentation Generator${NC}"
+echo -e "${YELLOW}QuickWiki Documentation Generator${NC}"
 echo "-------------------------------"
 
 # Define paths
 REPO_PATH=$(pwd)
-DOCS_PATH="${REPO_PATH}/cartograph_docs"
+DOCS_PATH="${REPO_PATH}/wiki"
 
 # Check if .env file exists with GEMINI_API_KEY
 if [ ! -f "${REPO_PATH}/.env" ]; then

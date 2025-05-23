@@ -1,13 +1,13 @@
-# Cartograph
+# QuickWiki
 
-Cartograph is an automated documentation generator for codebases. It analyzes repositories by examining file structures and contents, then leverages Google's Gemini LLM to generate insightful, well-structured documentation that includes diagrams, code explanations, and architectural overviews.
+QuickWiki is an automated documentation generator for codebases. It analyzes repositories by examining file structures and contents, then leverages Google's Gemini LLM to generate insightful, well-structured documentation that includes diagrams, code explanations, and architectural overviews.
 
 ## Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/cartograph.git
-cd cartograph
+git clone https://github.com/your-username/quick-wiki.git
+cd quick-wiki
 
 # Install dependencies
 npm install
@@ -30,13 +30,13 @@ You can obtain a Gemini API key from the [Google AI Studio](https://makersuite.g
 
 ```bash
 # Generate documentation for a repository
-npx cartograph /path/to/repository
+npx quick-wiki /path/to/repository
 
 # Specify a custom output directory
-npx cartograph /path/to/repository -o /path/to/output
+npx quick-wiki /path/to/repository -o /path/to/output
 
 # Provide API key via command line
-npx cartograph /path/to/repository -k your_api_key_here
+npx quick-wiki /path/to/repository -k your_api_key_here
 ```
 
 ### Development Commands

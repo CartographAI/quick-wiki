@@ -1,8 +1,8 @@
-# Cartograph Development Progress
+# QuickWiki Development Progress
 
-## Current Status (May 7, 2024)
+## Current Status
 
-The first version of Cartograph is now operational. The full documentation generation pipeline is working, including repository scanning, LLM-powered analysis, and markdown document creation with diagrams.
+The first version of QuickWiki is now operational. The full documentation generation pipeline is working, including repository scanning, LLM-powered analysis, and markdown document creation with diagrams.
 
 ### What Works
 

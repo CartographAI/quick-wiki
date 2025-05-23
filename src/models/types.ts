@@ -17,7 +17,7 @@ export interface DocStructure {
 
 export interface CommandLineArgs {
   repositoryPath: string;
-  outputDir?: string; // Defaults to `${repositoryPath}/cartograph_docs`
+  outputDir?: string; // Defaults to `${repositoryPath}/wiki`
   geminiApiKey?: string; // Uses process.env.GEMINI_API_KEY if not provided
 }
 
