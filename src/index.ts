@@ -13,7 +13,7 @@ dotenv.config();
 
 const program = new Command();
 
-program.name("quick-wiki").description("An automated documentation generator for codebases").version("0.1.0");
+program.name("quickwiki-ai").description("An automated documentation generator for codebases").version("0.1.0");
 
 program
   .argument("<repository-path>", "Path to the repository to document")

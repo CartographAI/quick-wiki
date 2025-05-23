@@ -28,16 +28,16 @@ QuickWiki requires the following:
     *   CentOS/RHEL: `yum install tree`
 
     Ensure that the installed version supports JSON output format (`--gitignore -J`). Version 1.7.0 or later is recommended.
-4.  **QuickWiki Package:** Install the `quick-wiki` package globally using npm:
+4.  **QuickWiki Package:** Install the `quickwiki-ai` package globally using npm:
 
     ```bash
-    npm install -g quick-wiki
+    npm install -g quickwiki-ai
     ```
 
 ## Configuration
 
 1.  **.env file:** Create a `.env` file in the root directory of your project and add your Gemini API key as described above.
-2.  **Command-line options:** You can configure QuickWiki using command-line options when running the `quick-wiki` command. The available options are:
+2.  **Command-line options:** You can configure QuickWiki using command-line options when running the `quickwiki-ai` command. The available options are:
     *   `<repository-path>`: Path to the repository to document.
     *   `-o, --output <directory>`: Custom output directory (default: `<repository-path>/wiki`).
     *   `-k, --gemini-api-key <key>`: Provide API key via command line instead of environment variable.
@@ -45,7 +45,7 @@ QuickWiki requires the following:
     Example:
 
     ```bash
-    npx quick-wiki /path/to/your/repo -o /path/to/output/directory -k your_api_key
+    npx quickwiki-ai /path/to/your/repo -o /path/to/output/directory -k your_api_key
     ```
 
 ## Verification

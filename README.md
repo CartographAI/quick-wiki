@@ -1,8 +1,8 @@
-# npx quick-wiki 📚
+# npx quickwiki-ai 📚
 
 <div align="center">
 
-[![NPM version](https://img.shields.io/npm/v/quick-wiki.svg)](https://www.npmjs.com/package/quick-wiki)
+[![NPM version](https://img.shields.io/npm/v/quickwiki-ai.svg)](https://www.npmjs.com/package/quickwiki-ai)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Automated codebase documentation powered by Gemini**
@@ -13,7 +13,7 @@
 
 </div>
 
-> 🤔 Want to see what QuickWiki can do? Check out [its own documentation](https://github.com/CartographAI/quick-wiki/blob/master/wiki/index.md) - yes, we used QuickWiki to document itself!
+> 🤔 Want to see what QuickWiki can do? Check out [its own documentation](https://github.com/CartographAI/quickwiki/blob/master/wiki/index.md) - yes, we used QuickWiki to document itself!
 
 ## 🚀 Features
 
@@ -35,7 +35,7 @@ If you don't have a Gemini API key, get one from [Google AI Studio](https://aist
 export GEMINI_API_KEY=your_api_key
 
 # Generate docs for your repository
-npx quick-wiki /path/to/your/repo
+npx quickwiki-ai /path/to/your/repo
 ```
 
 Your docs will be generated in a minute or two! They will be in the `wiki` directory by default.
@@ -43,7 +43,7 @@ Your docs will be generated in a minute or two! They will be in the `wiki` direc
 ### Command Line Options
 
 ```bash
-npx quick-wiki <repository-path> [options]
+npx quickwiki-ai <repository-path> [options]
 ```
 
 Options:

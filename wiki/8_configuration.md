@@ -1,4 +1,5 @@
 # Configuration
+
 This page describes the different configuration options available for QuickWiki, including command-line arguments and environment variables, allowing users to customize the documentation generation process.
 
 ## Command-Line Arguments
@@ -8,7 +9,7 @@ QuickWiki's primary configuration is managed through command-line arguments, pro
 The basic command structure is:
 
 ```bash
-npx quick-wiki <repository-path> [options]
+npx quickwiki-ai <repository-path> [options]
 ```
 
 ### `<repository-path>`
@@ -22,7 +23,7 @@ This option allows you to specify the output directory for the generated documen
 Example:
 
 ```bash
-npx quick-wiki /path/to/my/repo --output /path/to/my/docs
+npx quickwiki-ai /path/to/my/repo --output /path/to/my/docs
 ```
 
 ### `-k, --gemini-api-key <key>`
@@ -32,7 +33,7 @@ This option lets you directly provide your Google Gemini API key via the command
 Example:
 
 ```bash
-npx quick-wiki /path/to/my/repo --gemini-api-key YOUR_API_KEY
+npx quickwiki-ai /path/to/my/repo --gemini-api-key YOUR_API_KEY
 ```
 
 ## Environment Variables
@@ -62,7 +63,7 @@ QuickWiki uses the [validateRequiredArgs()](/src/utils/errorHandling.ts) functio
 To generate documentation for a repository located at `/home/user/my-project` and store the output in `/home/user/my-project-docs`, you can use the following command:
 
 ```bash
-npx quick-wiki /home/user/my-project --output /home/user/my-project-docs
+npx quickwiki-ai /home/user/my-project --output /home/user/my-project-docs
 ```
 
 Make sure the `GEMINI_API_KEY` environment variable is set before running the command, or provide the API key using the `--gemini-api-key` option.

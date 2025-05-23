@@ -1,10 +1,10 @@
 {
-  "name": "quick-wiki",
+  "name": "quickwiki-ai",
   "version": "0.1.0",
   "description": "Quick and local documentation generator for codebases",
   "main": "dist/index.js",
   "bin": {
-    "quick-wiki": "dist/index.js"
+    "quickwiki-ai": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -15,7 +15,7 @@
   },
   "keywords": ["deepwiki", "documentation", "generator", "llm", "gemini", "codebase"],
   "author": "Teo Si-Yan (https://github.com/siyant)",
-  "repository": "https://github.com/CartographAI/quick-wiki",
+  "repository": "https://github.com/CartographAI/quickwiki",
   "license": "MIT",
   "dependencies": {
     "@google/genai": "^0.12.0",
