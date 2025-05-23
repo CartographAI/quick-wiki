@@ -13,6 +13,8 @@
 
 </div>
 
+> 🤔 Want to see what QuickWiki can do? Check out [its own documentation](https://github.com/CartographAI/quick-wiki/blob/master/wiki/index.md) - yes, we used QuickWiki to document itself!
+
 ## 🚀 Features
 
 - 🤖 **Fully Automated**: Just point it at your repository and get a complete wiki with zero human input
