@@ -72,11 +72,12 @@ The project follows a structured organization of files and directories:
 ```
 .
 ├── README.md                     # Project overview and usage instructions
-├── generate-docs.sh              # Script to generate documentation
+├── docs                          # Documentation directory
+│   ├── progress.md               # Development progress tracking
+│   └── technical-spec.md         # Technical specification
 ├── jest.config.js                # Jest testing configuration
 ├── package-lock.json             # NPM dependencies lock file
 ├── package.json                  # Project metadata and dependencies
-├── progress.md                   # Development progress tracking
 ├── src                           # Source code directory
 │   ├── index.ts                  # Main entry point
 │   ├── models                    # Data models and interfaces
@@ -90,8 +91,8 @@ The project follows a structured organization of files and directories:
 │   │   └── repositoryScanner.test.ts  # Tests for repository scanner
 │   └── utils                     # Utility functions
 │       └── errorHandling.ts      # Error handling utilities
-├── technical-spec.md             # Technical specification
 ├── tsconfig.json                 # TypeScript configuration
+├── wiki                          # Generated documentation output
 └── verify-installation.sh        # Installation verification script
 ```
 
