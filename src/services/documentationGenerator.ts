@@ -44,8 +44,8 @@ export class DocumentationGenerator {
     }
 
     // Create an index.md file that links to all the documentation pages
-    await this.generateIndexPage(docStructure);
-    console.log(`Documentation generated successfully at ${this.outputDir}`);
+    const indexContent = this.generateIndexPage(docStructure);
+    await this.writeDocPage('index', indexContent);
   }
 
   private async generatePageMarkdown(page: DocPage): Promise<string> {
