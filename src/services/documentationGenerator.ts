@@ -34,7 +34,6 @@ export class DocumentationGenerator {
       try {
         const markdown = await this.generatePageMarkdown(page);
         await this.writeDocPage(page.id, markdown);
-        console.log(`✓ Generated: ${page.id}`);
       } catch (error) {
         if (error instanceof Error) {
           console.error(`✗ Failed to generate page ${page.id}: ${error.message}`);

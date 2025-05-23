@@ -148,7 +148,7 @@ The documentation should follow this format:
 2. Optionally, one level of sub-pages (e.g., "1-1_system-design", "1-2_workflows")
 3. No deeper nesting is allowed
 
-Start with high-level overview pages, then cover technical architecture, installation/setup, and specific components or services.
+Start with high-level overview pages, then cover installation/setup, technical architecture, and specific features, user/data flows or implementation patterns. Cover general topics first, then dive into specific details. The total number of pages should range from 5 for a small codebase to 20 for a large codebase.
 
 For each page, provide:
 1. A numerical ID (e.g., "1", "1-1", "2")
@@ -156,7 +156,7 @@ For each page, provide:
 3. A brief description of what the page will contain
 4. A COMPREHENSIVE list of relevant file paths that should be referenced when generating this page
 
-IMPORTANT: For each page, include ALL files that might be relevant to that topic. The page content generator will ONLY have access to the files you list in "relevantFilePaths". Err strongly on the side of including more files rather than fewer.
+IMPORTANT: For each page, include ALL files that might be relevant to that topic under "relevantFilePaths". The page content generator will ONLY have access to the files you list in "relevantFilePaths". Always include high-level files such as README.md, package.json, etc, as context for the page content generator.
 `;
 
       // Define the schema for DocStructure
@@ -186,7 +186,8 @@ IMPORTANT: For each page, include ALL files that might be relevant to that topic
                     type: Type.STRING,
                     description: "File path relative to repository root",
                   },
-                  description: "All file paths relevant to this page",
+                  description:
+                    "All file paths relevant to this page. Err strongly on the side of including more files rather than fewer.",
                 },
                 subPages: {
                   type: Type.ARRAY,
