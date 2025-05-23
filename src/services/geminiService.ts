@@ -89,7 +89,7 @@ Select files that:
 
       if (initialFileContents) {
         const initialContentSummary = initialFileContents
-          .map((file) => `${file.path}: ${file.content.substring(0, 200)}...`)
+          .map((file) => `${file.path}: ${file.content.substring(0, 1000)}...`)
           .join("\n\n");
 
         prompt = `
@@ -133,7 +133,7 @@ ${fileTree}
   async generateDocStructure(fileContents: FileContent[]): Promise<DocStructure> {
     try {
       const fileContentsSummary = fileContents
-        .map((file) => `File: ${file.path}\nContent: ${file.content.substring(0, 300)}...`)
+        .map((file) => `File: ${file.path}\nContent: ${file.content.substring(0, 1000)}...`)
         .join("\n\n");
 
       const prompt = `
@@ -174,7 +174,7 @@ IMPORTANT: For each page, include ALL files that might be relevant to that topic
                 },
                 title: {
                   type: Type.STRING,
-                  description: "Human-readable title for the page",
+                  description: 'Human-readable title for the page (e.g., "Project Overview")',
                 },
                 description: {
                   type: Type.STRING,
