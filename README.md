@@ -2,6 +2,9 @@
 
 <div align="center">
 
+[![NPM version](https://img.shields.io/npm/v/quick-wiki.svg)](https://www.npmjs.com/package/quick-wiki)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 **Automated codebase documentation powered by Gemini**
 
 **Like DeepWiki but fast, runs locally and under your control**
