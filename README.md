@@ -1,72 +1,74 @@
-# QuickWiki
+# npx quick-wiki 📚
 
-QuickWiki is an automated documentation generator for codebases. It analyzes repositories by examining file structures and contents, then leverages Google's Gemini LLM to generate insightful, well-structured documentation that includes diagrams, code explanations, and architectural overviews.
+<div align="center">
 
-## Installation
+**Automated codebase documentation powered by Gemini**
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/quick-wiki.git
-cd quick-wiki
+**Like DeepWiki but fast, runs locally and under your control**
 
-# Install dependencies
-npm install
+[Features](#-features) • [Usage](#-usage) • [How It Works](#-how-it-works)
 
-# Build the project
-npm run build
-```
+</div>
 
-## Configuration
+## 🚀 Features
 
-Create a `.env` file in the project root with your Google Gemini API key:
+- 🤖 **Fully Automated**: Just point it at your repository and get a complete wiki with zero human input
+- 📊 **Smart Architecture Analysis**: Generates architectural overviews, diagrams, and code explanations
+- ⚡ **Fast & Affordable**: Uses Google's Gemini models for quick, cost-effective processing
+- 🔒 **Privacy First**: Runs locally with your own API key
+- 📝 **Markdown Output**: Clean, readable files that you can use with other AI tools
+- 📈 **Visual Documentation**: Auto-generates Mermaid diagrams for architecture and workflows
 
-```
-GEMINI_API_KEY=your_api_key_here
-```
+## 💻 Usage
 
-You can obtain a Gemini API key from the [Google AI Studio](https://makersuite.google.com/).
+### 🏃 Quick Start
 
-## Usage
+If you don't have a Gemini API key, get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ```bash
-# Generate documentation for a repository
-npx quick-wiki /path/to/repository
+# Set your Gemini API key
+export GEMINI_API_KEY=your_api_key
 
-# Specify a custom output directory
-npx quick-wiki /path/to/repository -o /path/to/output
-
-# Provide API key via command line
-npx quick-wiki /path/to/repository -k your_api_key_here
+# Generate docs for your repository
+npx quick-wiki /path/to/your/repo
 ```
 
-### Development Commands
+Your docs will be generated in a minute or two! They will be in the `wiki` directory by default.
+
+### Command Line Options
 
 ```bash
-# Test repository scanner
-npm run dev -- test-scan /path/to/repository
-
-# Test file reading
-npm run dev -- test-read /path/to/repository path/to/file
-
-# Test Gemini API connection
-npm run dev -- test-gemini
+npx quick-wiki <repository-path> [options]
 ```
 
-## Features
+Options:
 
-- **Automated Documentation Generation**: Creates comprehensive documentation with minimal human intervention
-- **Codebase Analysis**: Analyzes repository structure and file contents
-- **Markdown Output**: Generates flat, easy-to-navigate documentation structure
-- **Visual Aids**: Incorporates Mermaid diagrams for better understanding
-- **Logical Organization**: Creates documentation with a hierarchical structure
+- `-o, --output <directory>`: Custom output directory (default: <repository-path>/wiki)
+- `-k, --gemini-api-key <key>`: Provide API key via command line instead of environment variable
 
-## Requirements
+## ⚙️ How It Works
+
+QuickWiki uses Gemini 2.0 Flash to generate documentation in three steps:
+
+1. **Explore Codebase**
+
+   - Scans repository structure and identifies key files
+   - Uses AI to select the most relevant files in two passes
+   - Builds comprehensive understanding of your codebase
+
+2. **Generate Documentation Structure**
+
+   - Generates documentation outline with pages and sections
+   - Identifies relevant files for each documentation topic
+
+3. **Generate Documentation Pages**
+   - Creates each page using relevant code context
+   - Auto-generates diagrams and code explanations
+   - Builds navigation and links everything together
+
+## 🛠️ Requirements
 
 - Node.js 16+
 - TypeScript
 - `tree` command-line utility with `--gitignore` support
-- Google Gemini API key
-
-## License
-
-MIT
+- Google Gemini API key (get one from [Google AI Studio](https://aistudio.google.com/app/apikey))
